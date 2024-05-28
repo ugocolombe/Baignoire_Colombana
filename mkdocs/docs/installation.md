@@ -10,8 +10,61 @@ Ce guide vous aidera à installer et configurer le projet de simulation de baign
 
 ## Étapes d'installation
 
-1. **Cloner le dépôt :**
+### 1. Cloner le dépôt GitHub
 
-   ```sh
-   git clone <URL_DU_DÉPÔT>
-   cd Baignoire_Colombana
+Ouvrez un terminal ou une invite de commande et exécutez la commande suivante pour cloner le dépôt :
+
+```sh
+git clone https://github.com/ugocolombe/Baignoire_Colombana
+cd Baignoire_Colombana
+```
+
+### 2. Compiler le projet et télécharger les dépendances
+
+Exécutez la commande suivante pour compiler le projet et télécharger toutes les dépendances nécessaires :
+
+mvn clean install
+
+Cette commande exécutera les étapes suivantes :
+
+- Nettoyage des fichiers de construction précédents (clean). 
+- Téléchargement des dépendances définies dans le pom.xml. 
+- Compilation du code source. 
+- Création du fichier JAR exécutable.
+
+### 3. Exécuter l'application
+
+Une fois la construction terminée, exécutez l'application en utilisant Maven :
+
+mvn javafx:run
+
+
+
+### Problèmes potentiels
+
+Problème : Maven ne trouve pas JavaFX
+
+Si Maven ne parvient pas à trouver les dépendances JavaFX, assurez-vous d'avoir ajouté les bonnes dépendances dans votre pom.xml :
+
+```sh
+<dependencies>
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-controls</artifactId>
+        <version>17</version>
+    </dependency>
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-fxml</artifactId>
+        <version>17</version>
+    </dependency>
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-graphics</artifactId>
+        <version>17</version>
+    </dependency>
+</dependencies>
+```
+
+
+En suivant ces étapes, vous devriez être en mesure d'installer et d'exécuter le projet "Baignoire_Colombana" sur votre machine.

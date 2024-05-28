@@ -1,1 +1,10 @@
-site_name: My Docs
+site_name: Projet Baignoire
+nav:
+  - Accueil: index.md
+  - À propos: about.md
+  - Installation: installation.md
+  - Licence: licence.md
+  - Utilisation: utilisation.md
+theme:
+  name: mkdocs
+
