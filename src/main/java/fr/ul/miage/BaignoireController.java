@@ -72,7 +72,7 @@ public class BaignoireController {
     private XYChart.Series<Number, Number> series;
     private int elapsedTime;
 
-    private double totalWaterUsed; // Variable to keep track of the total water used
+    private double totalEauUsée; // Variable to keep track of the total water used
 
     /**
      * Constructeur par défaut de la classe BaignoireController.
@@ -299,7 +299,7 @@ public class BaignoireController {
         });
 
         startTime = Instant.now();
-        totalWaterUsed = 0; // Reset total water used
+        totalEauUsée = 0; // Reset total water used
         elapsedTime = 0; // Reset elapsed time
         series.getData().clear(); // Clear previous data
         isRunning = true;
@@ -340,9 +340,9 @@ public class BaignoireController {
         double waterInflow = robinets.stream().mapToDouble(Robinet::getDebit).sum();
         double waterOutflow = fuites.stream().mapToDouble(Fuite::getDebit).sum();
         if (tauxRemplissage < 100) {
-            totalWaterUsed += waterInflow - waterOutflow;
+            totalEauUsée += waterInflow - waterOutflow;
         } else {
-            totalWaterUsed = robinets.stream().mapToDouble(Robinet::getDebit).sum() * elapsedTime - waterOutflow * elapsedTime;
+            totalEauUsée = robinets.stream().mapToDouble(Robinet::getDebit).sum() * elapsedTime - waterOutflow * elapsedTime;
             arreter();
         }
     }
@@ -391,7 +391,7 @@ public class BaignoireController {
         endTime = Instant.now();
         Duration duration = Duration.between(startTime, endTime);
         resultLabel.setText(String.format("Simulation terminée !\nEau totale utilisée: %.2f litres\nTemps de simulation: %d ms",
-                totalWaterUsed, duration.toMillis()));
+                totalEauUsée, duration.toMillis()));
     }
 
     /**
