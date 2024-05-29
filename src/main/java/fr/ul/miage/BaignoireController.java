@@ -17,6 +17,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -348,7 +351,7 @@ public class BaignoireController {
     }
 
     /**
-     * Arrête la simulation de remplissage de la baignoire.
+     * Arrête la simulation de remplissage de la baignoire et sauvegarde les résultats dans un fichier CSV.
      */
     @FXML
     public void arreter() {
@@ -392,6 +395,9 @@ public class BaignoireController {
         Duration duration = Duration.between(startTime, endTime);
         resultLabel.setText(String.format("Simulation terminée !\nEau totale utilisée: %.2f litres\nTemps de simulation: %d ms",
                 totalEauUsée, duration.toMillis()));
+
+        // Save the results to a CSV file
+        saveResultsToCSV();
     }
 
     /**
@@ -409,6 +415,22 @@ public class BaignoireController {
             Button button = (Button) fuitesRepairBox.getChildren().get(index);
             button.setDisable(true); // Disable the button
             Platform.runLater(this::updateRemplissageUI); // Update the bathtub filling dynamically
+        }
+    }
+
+    /**
+     * Sauvegarde les résultats de la simulation dans un fichier CSV.
+     */
+    private void saveResultsToCSV() {
+        String fileName = "simulation_results.csv";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+            writer.write("Temps (s),Remplissage (%)\n");
+            for (XYChart.Data<Number, Number> data : series.getData()) {
+                writer.write(data.getXValue() + "," + data.getYValue() + "\n");
+            }
+            System.out.println("Les résultats de la simulation ont été sauvegardés dans " + fileName);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

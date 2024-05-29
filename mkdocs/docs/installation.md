@@ -23,7 +23,10 @@ cd Baignoire_Colombana
 
 Exécutez la commande suivante pour compiler le projet et télécharger toutes les dépendances nécessaires :
 
-mvn clean install
+```sh
+mvn clean
+mvn install
+```
 
 Cette commande exécutera les étapes suivantes :
 
