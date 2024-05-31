@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -12,6 +13,9 @@
         <maven.compiler.target>17</maven.compiler.target>
         <javafx.version>17</javafx.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.bindist.dir>${project.basedir}/bindist</project.bindist.dir>
+        <project.main.classname>fr.ul.miage.Launcher</project.main.classname>
+        <project.bin.appname>run</project.bin.appname>
     </properties>
 
     <build>
@@ -30,7 +34,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.5</version>
                 <configuration>
-                    <mainClass>fr.ul.miage.Launcher</mainClass>
+                    <mainClass>${project.main.classname}</mainClass>
                 </configuration>
             </plugin>
 
@@ -43,22 +47,29 @@
                 </configuration>
             </plugin>
 
-            <!-- Plugin pour générer l'archive des sources -->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>3.2.1</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>appassembler-maven-plugin</artifactId>
+                <version>1.10</version>
+                <configuration>
+                    <assembleDirectory>${project.bindist.dir}</assembleDirectory>
+                    <programs>
+                        <program>
+                            <mainClass>${project.main.classname}</mainClass>
+                            <id>${project.bin.appname}</id>
+                        </program>
+                    </programs>
+                </configuration>
                 <executions>
                     <execution>
-                        <id>attach-sources</id>
+                        <phase>package</phase>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>assemble</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
 
-            <!-- Plugin pour assembler la distribution source -->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.6.0</version>
@@ -95,6 +106,11 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
+            <version>17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
             <version>17</version>
         </dependency>
     </dependencies>
